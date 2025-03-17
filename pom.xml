@@ -84,6 +84,11 @@
         </dependency>
         
         <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+        </dependency>
+        
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
         </dependency>
@@ -109,7 +114,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>    
-                <version>3.2.5</version>         
+                <version>3.5.2</version>         
                 <configuration>
                     <useSystemClassLoader>false</useSystemClassLoader>                    
                 </configuration>
@@ -154,7 +159,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>   
-                <version>4.0.0-M13</version>           
+                <version>4.0.0-M16</version>           
                 <configuration>
                     <locales>en,fr,es</locales>
                 </configuration>
@@ -162,7 +167,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>     
-                <version>3.6.3</version>          
+                <version>3.11.2</version>          
                 <configuration>                   
                 </configuration> 
             </plugin>
