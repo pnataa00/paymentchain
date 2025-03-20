@@ -120,10 +120,15 @@ public class CustomerRestController {
     public Customer getByCode(@RequestParam("code") String code){
         Customer customer = customerRepository.findByCode(code);
         List<CustomerProduct> products = customer.getProducts();
+        //buscar nombre producto
         products.forEach(x -> {
             String productName = getProductName(x.getId());
             x.setProductName(productName);
         });
+        
+        //buscar transacciones
+        List<?> transactions = getTransactions(customer.getIban());
+        customer.setTransactions(transactions);
         return customer;
     }
     
@@ -137,6 +142,16 @@ public class CustomerRestController {
                 .retrieve().bodyToMono(JsonNode.class).block();
         String name = block.get("name").asText();
         return name;
+    }
+    
+    private List<?> getTransactions(String iban){
+         WebClient build = webClientBuilder.clientConnector(new ReactorClientHttpConnector(client))
+                .baseUrl("http://localhost:8083/transaction")
+                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .build();
+        List<?> transactions = build.method(HttpMethod.GET).uri(uriBuilder -> uriBuilder.path("/customer/transactions").queryParam("accountIban", iban).build()).retrieve().bodyToFlux(Object.class).collectList().block();
+    
+        return transactions;
     }
     
 }

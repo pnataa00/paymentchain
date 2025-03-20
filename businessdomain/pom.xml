@@ -16,6 +16,7 @@
     <modules>
         <module>Customer</module>
         <module>product</module>
+        <module>Transactions</module>
     </modules>
     
     
