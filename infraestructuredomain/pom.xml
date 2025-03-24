@@ -10,11 +10,14 @@
     
     <groupId>com.paymentchain.infraestructuradomain</groupId>
     <artifactId>infraestructuradomain</artifactId>
+    <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
-
-   <properties>
+    <modules>
+        <module>ConfigServer</module>
+    </modules>
+    <properties>
        <!--spring cloud version, please check the table https://spring.io/projects/spring-cloud compatibility version with spring boot framework-->
-          <spring-cloud-dependencies.version>2023.0.0</spring-cloud-dependencies.version>
+          <spring-cloud-dependencies.version>2024.0.1</spring-cloud-dependencies.version>
     </properties>
     
      <!--Allows consolidate and centralized management of deendency version witout adding dependencies

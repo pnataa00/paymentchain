@@ -21,7 +21,7 @@
     
     
     <properties>
-        <spring-cloud-dependencies.version>2023.0.0</spring-cloud-dependencies.version>  
+        <spring-cloud-dependencies.version>2024.0.1</spring-cloud-dependencies.version>  
         <org.mapstruct.version>1.6.3</org.mapstruct.version>   
         <org.lombo.version>1.18.36</org.lombo.version>    
            
