@@ -49,11 +49,15 @@ public class CustomerRestController {
     @Autowired
     CustomerRepository customerRepository;
     
-    private final WebClient.Builder webClientBuilder;
+    @Autowired
+    private WebClient.Builder webClientBuilder;
+    
+    //redefinido en la clase main
+    /*private final WebClient.Builder webClientBuilder;
 
     public CustomerRestController(WebClient.Builder webClientBuilder) {
         this.webClientBuilder = webClientBuilder;
-    }
+    }*/
     
     HttpClient client = HttpClient.create()
             //timeout es el tiempo de espera maximo para la conexion entre cliente y servidor
@@ -144,9 +148,9 @@ public class CustomerRestController {
     
     private String getProductName(long id){
         WebClient build = webClientBuilder.clientConnector(new ReactorClientHttpConnector(client))
-                .baseUrl("http://localhost:8082/product")
+                .baseUrl("http://BUSINESSDOMAIN-PRODUCT/product")
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .defaultUriVariables(Collections.singletonMap("url", "http://localhost:8082/product"))
+                .defaultUriVariables(Collections.singletonMap("url", "http://BUSINESSDOMAIN-PRODUCT/product"))
                 .build();
         JsonNode block = build.method(HttpMethod.GET).uri("/" + id)
                 .retrieve().bodyToMono(JsonNode.class).block();
@@ -156,10 +160,10 @@ public class CustomerRestController {
     
     private List<?> getTransactions(String iban){
          WebClient build = webClientBuilder.clientConnector(new ReactorClientHttpConnector(client))
-                .baseUrl("http://localhost:8083/transaction")
+                .baseUrl("http://BUSINESSDOMAIN-TRANSACTIONS/transaction")
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .build();
-        List<?> transactions = build.method(HttpMethod.GET).uri(uriBuilder -> uriBuilder.path("/customer/transactions").queryParam("accountIban", iban).build()).retrieve().bodyToFlux(Object.class).collectList().block();
+        List<?> transactions = build.method(HttpMethod.GET).uri(uriBuilder -> uriBuilder.path("/customer/transactions").queryParam("iban", iban).build()).retrieve().bodyToFlux(Object.class).collectList().block();
     
         return transactions;
     }

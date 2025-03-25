@@ -2,16 +2,17 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>com.paymentchain.businessdomain</groupId>
-                <artifactId>businessdomain</artifactId>
-                <version>1.0-SNAPSHOT</version>
-	</parent>
+        <parent>
+            <groupId>com.paymentchain.infraestructuradomain</groupId>
+            <artifactId>infraestructuradomain</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </parent>
+        
 	<groupId>com.paymentchain</groupId>
-	<artifactId>customer</artifactId>
+	<artifactId>eurekaServer</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>customer</name>
-	<description>customer</description>
+	<name>eurekaServer</name>
+	<description>eurekaServer</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -26,7 +27,15 @@
 		<url/>
 	</scm>
 	
-        
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
+		</dependency>
+
+		
+	</dependencies>
+	
 
 	<build>
 		<plugins>
