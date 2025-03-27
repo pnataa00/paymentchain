@@ -5,6 +5,7 @@
 package com.paymentchain.product.controller;
 
 import com.paymentchain.product.entities.Product;
+import com.paymentchain.product.exception.BusinessRuleException;
 import com.paymentchain.product.repository.ProductRepository;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +31,8 @@ public class ProductRestController {
     
     @Autowired
     private ProductRepository productRepository;
+    
+   
     
     @GetMapping()
     public List<Product> list() {
@@ -61,15 +64,27 @@ public class ProductRestController {
     }
     
     @PostMapping
-    public ResponseEntity<Product> post(@RequestBody Product input) {
-        productRepository.save(input);
-        return new ResponseEntity<>(input, HttpStatus.OK);
+    public ResponseEntity<Product> post(@RequestBody Product input) throws BusinessRuleException {
+        if(input.getCode().isBlank() || input.getName().isBlank()){
+            throw new BusinessRuleException("1023", HttpStatus.PRECONDITION_FAILED, "El codigo y el nombre no pueden ser blancos o nulos");
+        }else{
+            productRepository.save(input);
+            return new ResponseEntity<>(input, HttpStatus.OK);
+        }
+        
     }
     
     @DeleteMapping("/{id}")
     public ResponseEntity<Product> delete(@PathVariable("id") long id) {
-        productRepository.deleteById(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        Optional<Product> product = productRepository.findById(id);
+        if(product.isPresent()){
+            productRepository.deleteById(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }else{
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        
+        
     }
     
     
