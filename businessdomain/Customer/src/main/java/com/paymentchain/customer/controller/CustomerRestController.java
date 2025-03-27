@@ -4,6 +4,10 @@
  */
 package com.paymentchain.customer.controller;
 
+import com.paymentchain.customer.commom.CustomerRequestMapper;
+import com.paymentchain.customer.commom.CustomerResponseMapper;
+import com.paymentchain.customer.dto.CustomerRequest;
+import com.paymentchain.customer.dto.CustomerResponse;
 import com.paymentchain.customer.entities.Customer;
 import com.paymentchain.customer.entities.CustomerProduct;
 import com.paymentchain.customer.exception.BusinessRuleException;
@@ -42,6 +46,12 @@ public class CustomerRestController {
     BusinessTransaction businessTransaction;
     
     @Autowired
+    CustomerRequestMapper request;
+    
+    @Autowired
+    CustomerResponseMapper response;
+    
+    @Autowired
     private Environment env;
     
     @GetMapping("/check")
@@ -53,10 +63,11 @@ public class CustomerRestController {
     @GetMapping()
     public ResponseEntity<?> findAll() {
         List<Customer> findAll = customerRepository.findAll();
+        List<CustomerResponse> customers = response.customerListToCustomerResponseList(findAll);
         if(findAll.isEmpty()){
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }else{
-            return ResponseEntity.ok(findAll);
+            return ResponseEntity.ok(customers);
         }
     }
     
@@ -71,7 +82,7 @@ public class CustomerRestController {
     }
     
     @PutMapping("/{id}")
-    public ResponseEntity<?> put(@PathVariable("id") long id, @RequestBody Customer input) {
+    public ResponseEntity<?> put(@PathVariable("id") long id, @RequestBody CustomerRequest input) {
         Optional<Customer> customer = customerRepository.findById(id);
         if(customer.isPresent()){
             Customer newCustomer = customer.get();
@@ -89,9 +100,11 @@ public class CustomerRestController {
     }
     
     @PostMapping
-    public ResponseEntity<?> post(@RequestBody Customer input) throws BusinessRuleException, UnknownHostException {
-        Customer post = businessTransaction.post(input);
-        return ResponseEntity.status(HttpStatus.CREATED).body(post);
+    public ResponseEntity<?> post(@RequestBody CustomerRequest input) throws BusinessRuleException, UnknownHostException {
+        Customer customer = request.customerRequestToCustomer(input);
+        Customer post = businessTransaction.post(customer);
+        CustomerResponse cust = response.customerToCustomerResponse(post);
+        return ResponseEntity.status(HttpStatus.CREATED).body(cust);
     }
     
     @DeleteMapping("/{id}")
