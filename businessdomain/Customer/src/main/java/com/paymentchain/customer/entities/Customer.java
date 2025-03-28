@@ -23,7 +23,6 @@ import java.util.List;
  */
 
 @Entity
-
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

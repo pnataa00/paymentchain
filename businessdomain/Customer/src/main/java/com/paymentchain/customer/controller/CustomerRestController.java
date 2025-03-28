@@ -13,6 +13,9 @@ import com.paymentchain.customer.entities.CustomerProduct;
 import com.paymentchain.customer.exception.BusinessRuleException;
 import com.paymentchain.customer.repository.CustomerRepository;
 import com.paymentchain.customer.transactions.BusinessTransaction;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.net.UnknownHostException;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -37,6 +40,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @RestController
 @RequestMapping("/customer/V1")
+@Tag(name = "Customer Controller", description = "API para usar customer")
 public class CustomerRestController {
     
     @Autowired
@@ -61,6 +65,9 @@ public class CustomerRestController {
             
     
     @GetMapping()
+    @Operation(description = "Retorna todos los customers de la base de datos")
+    @ApiResponse(responseCode = "200", description = "exito")
+    @ApiResponse(responseCode = "404", description = "no hay nada en la base de datos")
     public ResponseEntity<?> findAll() {
         List<Customer> findAll = customerRepository.findAll();
         List<CustomerResponse> customers = response.customerListToCustomerResponseList(findAll);
