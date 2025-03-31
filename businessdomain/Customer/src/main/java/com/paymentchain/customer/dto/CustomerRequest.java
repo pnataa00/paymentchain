@@ -13,7 +13,7 @@ import lombok.Data;
  */
 @Schema(name = "Customer Request", description = "Modelo de customer request")
 public class CustomerRequest {
-    
+    @Schema(name = "name", description = "nombre del customer", example = "pablo", requiredMode = Schema.RequiredMode.REQUIRED)
     private String name;
     private String phone;
     private String code;

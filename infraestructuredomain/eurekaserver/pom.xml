@@ -9,7 +9,7 @@
         </parent>
         
 	<groupId>com.paymentchain</groupId>
-	<artifactId>eurekaServer</artifactId>
+	<artifactId>eurekaserver</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>eurekaServer</name>
 	<description>eurekaServer</description>

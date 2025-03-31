@@ -51,16 +51,14 @@
     <name>paymentchainparent</name>
     <description>POM parent project for all spring boot projects</description>
    
-    <properties>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target> 
+    <properties> 
         <spring-boot.version>3.4.3</spring-boot.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding> 
         <postgres.version>42.7.2</postgres.version>    
         <java-validation.version>2.0.1.Final</java-validation.version> 
         <dockerfile-maven-version>1.4.13</dockerfile-maven-version>
         <spring-cloud.version>2024.0.1</spring-cloud.version>
-
+        <maven.compiler.release>21</maven.compiler.release>
     </properties>
     
     <dependencyManagement>
@@ -157,7 +155,7 @@
                     </execution>
                 </executions>
             </plugin>        
-            <!--   <plugin>
+               <plugin>
                 <groupId>com.spotify</groupId>
                 <artifactId>dockerfile-maven-plugin</artifactId>
                 <version>${dockerfile-maven-version}</version>                               
@@ -167,18 +165,18 @@
                         <phase>package</phase>
                         <goals>                                              
                             <goal>build</goal>
-                           <goal>push</goal>
+                           
                         </goals>
                     </execution>
                 </executions>
                 <configuration>                       
-                    <repository>digitalthinking/microservice-docker-${project.artifactId}</repository>
+                    <repository>paymentchain/microservice-docker-${project.artifactId}</repository>
                     <tag>${project.version}</tag>
                     <buildArgs>
-                        <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
+                        <JAR_FILE>/target/${project.build.finalName}.jar</JAR_FILE>
                     </buildArgs>
                 </configuration>
-            </plugin>-->  
+            </plugin>  
             
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
