@@ -107,11 +107,13 @@ public class CustomerRestController {
     }
     
     @PostMapping
-    public ResponseEntity<?> post(@RequestBody CustomerRequest input) throws BusinessRuleException, UnknownHostException {
-        Customer customer = request.customerRequestToCustomer(input);
-        Customer post = businessTransaction.post(customer);
-        CustomerResponse cust = response.customerToCustomerResponse(post);
-        return ResponseEntity.status(HttpStatus.CREATED).body(cust);
+    public ResponseEntity<?> post(@RequestBody Customer input) throws BusinessRuleException, UnknownHostException {
+//        Customer customer = request.customerRequestToCustomer(input);
+//        Customer post = businessTransaction.post(customer);
+//        CustomerResponse cust = response.customerToCustomerResponse(post);
+//        return ResponseEntity.status(HttpStatus.CREATED).body(cust);
+          Customer post = businessTransaction.post(input);
+          return ResponseEntity.status(HttpStatus.CREATED).body(post);
     }
     
     @DeleteMapping("/{id}")
