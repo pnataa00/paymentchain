@@ -23,6 +23,20 @@ services:
       - registry-discovery
     ports:
       - 8082:8082
+      
+      
+  apygateway:
+    container_name: id-apigateway
+    image: paymentchain/microservice-docker-apigateway:0.0.1-SNAPSHOT
+    environment:
+       - JAVA_OPTS=
+         -Xms256M 
+         -Xmx256M
+         -DEUREKA_SERVER=http://registry-discovery:8761/eureka/
+    depends_on:
+      - registry-discovery
+    ports:
+      - 8080:8080
 
   customer:
     container_name: bd-customer
@@ -35,8 +49,7 @@ services:
 
     depends_on:
       - registry-discovery
-    ports:
-      - 8084:8084
+  
 
   postgres_db:
     container_name: postgres
